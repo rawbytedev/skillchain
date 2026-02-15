@@ -14,9 +14,11 @@ func TestProvenanceHashEdgeCases(t *testing.T) {
 
 	t.Run("Hash with Empty Strings", func(t *testing.T) {
 		hash1 := service.generateProvenanceHash("", "", "")
-		hash2 := service.generateProvenanceHash("", "", "")
-		assert.Equal(t, hash1, hash2)
 		assert.Len(t, hash1, 64)
+		time.Sleep(1 * time.Second) // Ensure different timestamp for second hash
+		hash2 := service.generateProvenanceHash("", "", "")
+		assert.Len(t, hash2, 64)
+		assert.NotEqual(t, hash1, hash2)
 	})
 
 	t.Run("Hash Sensitivity to Input Order", func(t *testing.T) {
