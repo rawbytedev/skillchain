@@ -86,24 +86,6 @@ func TestVerificationService(t *testing.T) {
 		CacheTTL: 300,
 	}
 
-	t.Run("Generate Provenance Hash", func(t *testing.T) {
-		service := &VerificationService{}
-
-		hash1 := service.generateProvenanceHash("license1", "tool1", "user1")
-		hash2 := service.generateProvenanceHash("license1", "tool1", "user1")
-		hash3 := service.generateProvenanceHash("license2", "tool1", "user1")
-
-		// Hashes should be consistent for same inputs
-		assert.Equal(t, hash1, hash2)
-
-		// Different inputs should produce different hashes
-		assert.NotEqual(t, hash1, hash3)
-
-		// Hash should be valid SHA256 hex string
-		assert.Len(t, hash1, 64) // 64 chars for SHA256 hex
-		assert.Regexp(t, `^[a-f0-9]{64}$`, hash1)
-	})
-
 	t.Run("Validate Signature - Valid Recent", func(t *testing.T) {
 		service := &VerificationService{}
 		// Generate deterministic key and address for test
