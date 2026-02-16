@@ -15,11 +15,11 @@ import (
 )
 
 type Server struct {
-	echo       *echo.Echo
-	config     *config.Config
-	service    *core.VerificationService
-	cache      *cache.Client
-	blockchain blockchain.BlockchainInterface
+	echo        *echo.Echo
+	config      *config.Config
+	service     *core.VerificationService
+	cache       *cache.Client
+	blockchain  blockchain.BlockchainInterface
 	voteService *core.VoteService
 }
 
@@ -68,7 +68,7 @@ func (s *Server) setupRoutes() {
 
 func (s *Server) healthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":  "healthy",
+		"status":  200,
 		"service": "skillchain-verification",
 		"time":    time.Now().UTC(),
 	})

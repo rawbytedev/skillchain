@@ -31,7 +31,7 @@ func TestHealthCheckHandler(t *testing.T) {
 	var response map[string]interface{}
 	json.Unmarshal(rec.Body.Bytes(), &response)
 
-	assert.Equal(t, "healthy", response["status"])
+	assert.Equal(t, 200, response["status"])
 	assert.Equal(t, "skillchain-verification", response["service"])
 	assert.Contains(t, response, "time")
 }
@@ -42,8 +42,8 @@ func TestVerifyLicenseHandler(t *testing.T) {
 	t.Run("Health Check - Basic", func(t *testing.T) {
 		cfg := &config.Config{}
 		server := &Server{
-			echo:    e,
-			config:  cfg,
+			echo:   e,
+			config: cfg,
 		}
 
 		req := httptest.NewRequest(http.MethodGet, "/api/v1/health", nil)
