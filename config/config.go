@@ -1,29 +1,28 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"time"
 )
 
 type Config struct {
-	ServerPort         string
-	EthNodeURL         string
-	ContractAddr       string
-	JWTSecret          string
-	CacheTTL           int           // seconds
-	RateLimit          int           // requests per minute
-	CleanupInterval    time.Duration // KVStore cleanup interval
-	DemoMode           bool          // Use demo mode for testing
+	ServerPort string
+	EthNodeURL string
+	//ContractAddr       string
+	JWTSecret       string
+	CacheTTL        int           // seconds
+	RateLimit       int           // requests per minute
+	CleanupInterval time.Duration // KVStore cleanup interval
+	DemoMode        bool          // Use demo mode for testing
 	// Blockchain / signing config
-	LicenseNFTAddress  string
-	SignatureNonce     string
-	ChainID            int64
-	SignerPrivateKey   string
-	EnableBlockchain   bool
-	WSEndpoint         string
-	Env                string
+	LicenseNFTAddress string
+	SignatureNonce    string
+	ChainID           int64
+	SignerPrivateKey  string
+	EnableBlockchain  bool
+	//WSEndpoint        string
+	Env string
 }
 
 func Load() *Config {
@@ -31,28 +30,20 @@ func Load() *Config {
 	demoMode := getEnvAsBool("DEMO_MODE", false)
 
 	cfg := &Config{
-		ServerPort:      getEnv("PORT", "8080"),
-		EthNodeURL:      getEnv("ETH_NODE_URL", "wss://sepolia.infura.io/ws/v3/YOUR_KEY"),
-		ContractAddr:    getEnv("CONTRACT_ADDR", "0x..."),
-		JWTSecret:       getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
-		CacheTTL:        getEnvAsInt("CACHE_TTL", 300),
-		RateLimit:       getEnvAsInt("RATE_LIMIT", 100),
-		CleanupInterval: cleanupInterval,
-		DemoMode:        demoMode,
+		ServerPort:        getEnv("PORT", "8080"),
+		EthNodeURL:        getEnv("ETH_NODE_URL", "wss://sepolia.infura.io/ws/v3/YOUR_KEY"),
+		JWTSecret:         getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
+		CacheTTL:          getEnvAsInt("CACHE_TTL", 300),
+		RateLimit:         getEnvAsInt("RATE_LIMIT", 100),
+		CleanupInterval:   cleanupInterval,
+		DemoMode:          demoMode,
 		LicenseNFTAddress: getEnv("LICENSE_NFT_ADDRESS", "0x..."),
 		SignatureNonce:    getEnv("SIGNATURE_NONCE", "default-nonce"),
 		ChainID:           int64(getEnvAsInt("CHAIN_ID", 11155111)),
 		SignerPrivateKey:  getEnv("SIGNER_PRIVATE_KEY", ""),
 		EnableBlockchain:  getEnvAsBool("ENABLE_BLOCKCHAIN", false),
-		WSEndpoint:        getEnv("WS_ENDPOINT", ""),
-		Env:               getEnv("ENV", "development"),
-	}
-
-	// Validate critical config in non-demo mode
-	if !cfg.DemoMode {
-		if cfg.ContractAddr == "0x..." || cfg.ContractAddr == "" {
-			fmt.Println("warning: CONTRACT_ADDR not configured, using placeholder")
-		}
+		//WSEndpoint:        getEnv("WS_ENDPOINT", ""),
+		Env: getEnv("ENV", "development"),
 	}
 
 	return cfg

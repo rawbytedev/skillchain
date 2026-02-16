@@ -24,7 +24,7 @@ func NewLicenseHandler(licenseService blockchain.LicenseServiceInterface) *licen
 }
 func (h *licenseHandler) HealthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":  "healthy",
+		"status":  "OK",
 		"service": "skillchain-verification",
 		"time":    time.Now().UTC(),
 	})

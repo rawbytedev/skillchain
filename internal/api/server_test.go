@@ -38,8 +38,8 @@ func (m *mockBlockchainClient) IsLicenseValid(user common.Address, toolID *big.I
 func (m *mockBlockchainClient) GetLicenseMetadata(toolIDstr string) (*blockchain.LicenseMetadata, error) {
 	// Return dummy metadata for testing
 	return &blockchain.LicenseMetadata{
-		TokenID:      big.NewInt(1),
-		}, nil
+		TokenID: big.NewInt(1),
+	}, nil
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +68,8 @@ func setupTestServer(t *testing.T) (*echo.Echo, *blockchain.LicenseService, *cac
 		SignatureNonce:    "test-nonce",
 		CacheTTL:          int(5 * time.Minute),
 		//EnableCache:       true,
-		EnableBlockchain:  true,
-		ChainID:           31337, // Hardhat local
+		EnableBlockchain: true,
+		ChainID:          31337, // Hardhat local
 	}
 
 	// In-memory KV store
@@ -347,6 +347,6 @@ func TestHealthCheck(t *testing.T) {
 	var resp map[string]interface{}
 	err := json.Unmarshal(rec.Body.Bytes(), &resp)
 	require.NoError(t, err)
-	require.Equal(t, "healthy", resp["status"])
+	require.Equal(t, "OK", resp["status"])
 	require.Equal(t, "skillchain-verification", resp["service"])
 }
