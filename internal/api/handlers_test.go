@@ -31,7 +31,7 @@ func TestHealthCheckHandler(t *testing.T) {
 	var response map[string]interface{}
 	json.Unmarshal(rec.Body.Bytes(), &response)
 
-	assert.Equal(t, 200, response["status"])
+	assert.Equal(t, 200, int(response["status"].(float64)))
 	assert.Equal(t, "skillchain-verification", response["service"])
 	assert.Contains(t, response, "time")
 }
